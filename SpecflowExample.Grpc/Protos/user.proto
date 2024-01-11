@@ -1,0 +1,34 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "User.Grpc.proto";
+option go_package = "User/Grpc/proto";
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+package user;
+
+service Users{
+	rpc CreateUser(UserMessage) returns (UserMessage){
+		option (google.api.http) = {
+			post: "/api/users",
+			body: "*"
+		};
+	}
+
+	rpc GetUser(IdMessage) returns (UserMessage){
+		option (google.api.http) = {
+		  get: "/api/users/{id}"
+		};
+	}	 
+}
+
+message IdMessage{
+     int32 id = 1;
+ }
+
+message UserMessage{
+     int32 id = 1;
+	 string name = 2;
+ }
